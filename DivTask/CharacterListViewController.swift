@@ -1,6 +1,6 @@
 import UIKit
 
-class CharacterListViewController: UIViewController {
+final class CharacterListViewController: UIViewController {
     private let characterView = CharacterView()
     private let dataSource = CharacterListDataSource()
     private let delegate = CharacterListDelegate()
@@ -17,4 +17,3 @@ class CharacterListViewController: UIViewController {
         characterView.setupTitle(with: "Characters")
     }
 }
-

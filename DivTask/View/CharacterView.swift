@@ -5,7 +5,7 @@ final class CharacterView: UIView {
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 32
+        layout.minimumLineSpacing = ViewEnums.CharacterView.Constraints.collectionLayoutSpacing
         let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: layout
@@ -35,8 +35,7 @@ final class CharacterView: UIView {
 
 private extension CharacterView {
     func setupView() {
-        backgroundColor = UIColor(named: "customBackground")
-//        backgroundColor = .red
+        backgroundColor = UIColor(named: ViewEnums.CharacterView.Color.accentBackground)
         
         addSubview(titleLabel)
         addSubview(collectionView)
@@ -47,10 +46,10 @@ private extension CharacterView {
     func setupConstraints() {
         NSLayoutConstraint.activate(
             [
-                titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 90),
-                titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+                titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: ViewEnums.CharacterView.Constraints.titleTop),
+                titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: ViewEnums.CharacterView.Constraints.titleLeading),
                 
-                collectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 24),
+                collectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: ViewEnums.CharacterView.Constraints.collectionSpacing),
                 collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
                 collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
                 collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
