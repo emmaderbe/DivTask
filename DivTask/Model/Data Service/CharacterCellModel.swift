@@ -25,7 +25,8 @@ struct CharacterCellModel {
     let info: String
     let location: String
     let status: CharacterStatus
-    let imageURL: String
+    let imageURL: URL?
+    let image: Data?
 
     var buttonTitle: String {
         "Watch episodes"

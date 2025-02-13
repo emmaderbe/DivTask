@@ -1,7 +1,9 @@
 import UIKit
 
 final class CharacterCell: UICollectionViewCell {
+    private let imageContainerView = ImageFactory.createCharacterImageContainerView()
     private let characterImageView = ImageFactory.createCharacterImageView()
+    
     private let nameLabel = LabelFactory.createSubtitleLabel()
     private let infoLabel = LabelFactory.createOrdinaryLabel(with: ViewEnums.CharacterCell.Color.accentColor, and: .regular)
     
@@ -48,19 +50,21 @@ private extension CharacterCell {
     func setupView() {
         backgroundColor = .clear
         
-        addSubview(characterImageView)
+        addSubview(imageContainerView)
         addSubview(nameLabel)
         addSubview(infoLabel)
         addSubview(episodesButton)
         addSubview(locationStack)
         addSubview(statusBackgroundView)
         
+        imageContainerView.addSubview(characterImageView)
+        
         locationStack.addArrangedSubview(locationIcon)
         locationStack.addArrangedSubview(locationLabel)
         
         statusBackgroundView.addSubview(statusTag)
     }
-
+    
 }
 
 private extension CharacterCell {
@@ -72,10 +76,15 @@ private extension CharacterCell {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            characterImageView.topAnchor.constraint(equalTo: topAnchor),
-            characterImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            characterImageView.widthAnchor.constraint(equalToConstant: ViewEnums.CharacterCell.Constraints.characterImageViewHeight),
-            characterImageView.heightAnchor.constraint(equalTo: characterImageView.widthAnchor, multiplier: 1),
+            imageContainerView.topAnchor.constraint(equalTo: topAnchor),
+            imageContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            imageContainerView.widthAnchor.constraint(equalToConstant: ViewEnums.CharacterCell.Constraints.characterImageViewHeight),
+            imageContainerView.heightAnchor.constraint(equalTo: imageContainerView.widthAnchor),
+            
+            characterImageView.topAnchor.constraint(equalTo: imageContainerView.topAnchor),
+            characterImageView.leadingAnchor.constraint(equalTo: imageContainerView.leadingAnchor),
+            characterImageView.trailingAnchor.constraint(equalTo: imageContainerView.trailingAnchor),
+            characterImageView.bottomAnchor.constraint(equalTo: imageContainerView.bottomAnchor),
             
             nameLabel.topAnchor.constraint(equalTo: topAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: characterImageView.trailingAnchor, constant: ViewEnums.CharacterCell.Constraints.nameLabelSpacing),
@@ -110,10 +119,23 @@ extension CharacterCell {
         locationLabel.text = data.location
         statusTag.text = data.statusText
         
-        characterImageView.image = UIImage(named: data.imageURL)
+        setupImage(with: data)
+        setupTag(with: data)
         
+    }
+    
+    func setupImage(with data: CharacterCellModel) {
+        if let imageData = data.image {
+            characterImageView.image = UIImage(data: imageData)
+        } else {
+            characterImageView.image = nil
+            characterImageView.backgroundColor = .customGrey
+        }
+    }
+    
+    func setupTag(with data: CharacterCellModel) {
         statusTag.textColor = UIColor(named: data.statusColorScheme.textColorName)
-            statusBackgroundView.backgroundColor = UIColor(named: data.statusColorScheme.backgroundColorName)
+        statusBackgroundView.backgroundColor = UIColor(named: data.statusColorScheme.backgroundColorName)
     }
 }
 

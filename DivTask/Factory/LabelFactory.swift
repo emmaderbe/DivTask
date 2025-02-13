@@ -16,7 +16,8 @@ final class LabelFactory {
         let label = UILabel()
         label.font = .systemFont(ofSize: 21, weight: .medium)
         label.textColor = UIColor(named: "AccentColor")
-        label.numberOfLines = 0
+        label.numberOfLines = 1
+        label.lineBreakMode = .byTruncatingTail
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
