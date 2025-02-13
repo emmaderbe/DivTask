@@ -35,14 +35,14 @@ private extension CharacterListViewController {
     }
     
     func setupTitle() {
-        characterView.setupTitle(with: "Characters")
+        characterView.setupTitle(with: ViewEnums.CharacterView.String.title)
     }
     
     func bindViewModel() {
-        viewModel.fetchCharacters()
-        viewModel.didUpdateCharacters = { [weak self] in
+        viewModel.start()
+        viewModel.didUpdateCharacters = { [weak self] characters in
             guard let self = self else { return }
-            self.dataSource.updateCharacters(self.viewModel.characters)
+            self.dataSource.updateCharacters(characters)
             self.characterView.reloadCollection()
         }
     }

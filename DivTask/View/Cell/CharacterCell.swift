@@ -108,12 +108,12 @@ extension CharacterCell {
         infoLabel.text = data.info
         episodesButton.setTitle(data.buttonTitle, for: .normal)
         locationLabel.text = data.location
-        statusTag.text = data.status
-        characterImageView.image = UIImage(named: data.imageURL)
-    }
-    
-    func setupStatusColor() {
+        statusTag.text = data.statusText
         
+        characterImageView.image = UIImage(named: data.imageURL)
+        
+        statusTag.textColor = UIColor(named: data.statusColorScheme.textColorName)
+            statusBackgroundView.backgroundColor = UIColor(named: data.statusColorScheme.backgroundColorName)
     }
 }
 

@@ -1,32 +1,39 @@
 import Foundation
 
 protocol CharactersViewModelProtocol: AnyObject {
-    var characters: [CharacterCellModel] { get }
-    var didUpdateCharacters: (() -> Void)? { get set }
-    func fetchCharacters()
+    var didUpdateCharacters: (([CharacterCellModel]) -> Void)? { get set }
+    func start()
 }
 
 final class CharactersViewModel: CharactersViewModelProtocol {
     private let networkService: NetworkServiceProtocol
-    var characters: [CharacterCellModel] = []
-    var didUpdateCharacters: (() -> Void)?
-    
-    init(networkService: NetworkServiceProtocol) {
+    private let dataMapper: CharacterDataMapperProtocol
+    private var characters: [CharacterCellModel] = []
+
+    var didUpdateCharacters: (([CharacterCellModel]) -> Void)?
+
+    init(networkService: NetworkServiceProtocol, dataMapper: CharacterDataMapperProtocol) {
         self.networkService = networkService
+        self.dataMapper = dataMapper
+    }
+
+    func start() {
+        fetchCharacters()
     }
 }
 
-extension CharactersViewModel {
+private extension CharactersViewModel {
     func fetchCharacters() {
         networkService.fetchCharacters { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let characters):
-                self.characters = characters
-                self.didUpdateCharacters?()
+                self.characters = self.dataMapper.map(characters)
+                self.didUpdateCharacters?(self.characters)
             case .failure(let error):
                 print("Failed to fetch characters: \(error)")
             }
         }
     }
 }
+

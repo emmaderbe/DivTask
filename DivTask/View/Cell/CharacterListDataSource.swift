@@ -20,11 +20,6 @@ extension CharacterListDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterCell.identifier, for: indexPath) as? CharacterCell
         else { return UICollectionViewCell() }
         let data = character[indexPath.row]
-//        cell.setupText(name: "Rick Sanchez",
-//                       info: "Human, male",
-//                       bttn: "Watch episodes",
-//                       location: "Earth (C-500A)",
-//                       status: "Alive".uppercased())
         cell.setupCell(with: data)
         return cell
     }
