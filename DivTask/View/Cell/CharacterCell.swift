@@ -126,10 +126,16 @@ extension CharacterCell {
     
     func setupImage(with data: CharacterCellModel) {
         if let imageData = data.image {
-            characterImageView.image = UIImage(data: imageData)
+            let image = UIImage(data: imageData)
+            
+            if data.status == .dead {
+                characterImageView.image = image?.applyGrayscale()
+            } else {
+                characterImageView.image = image
+            }
         } else {
             characterImageView.image = nil
-            characterImageView.backgroundColor = .customGrey
+            characterImageView.backgroundColor = .customUnknownBackground
         }
     }
     
