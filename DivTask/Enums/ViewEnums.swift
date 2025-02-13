@@ -22,6 +22,9 @@ enum ViewEnums {
             static let locationStackSpacing: CGFloat = 10
             static let statusBackgroundHeight: CGFloat = 8
             static let statusBackgroundWidth: CGFloat = 16
+            
+            static let collectionViewWidth: CGFloat = 48
+            static let collectionViewHeight: CGFloat = 0.315
         }
     }
     
