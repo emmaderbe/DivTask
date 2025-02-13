@@ -5,9 +5,9 @@ final class CharacterCell: UICollectionViewCell {
     private let characterImageView = ImageFactory.createCharacterImageView()
     
     private let nameLabel = LabelFactory.createSubtitleLabel()
-    private let infoLabel = LabelFactory.createOrdinaryLabel(with: ViewEnums.CharacterCell.Color.accentColor, and: .regular)
+    private let infoLabel = LabelFactory.createOrdinaryLabel(with: ColorEnum.accentColor, and: .regular)
     
-    private let episodesButton = ButtonFactory.createButton(with: UIImage(named: ViewEnums.CharacterCell.Icon.episodesBttn), and: ViewEnums.CharacterCell.Color.accentOrange)
+    private let episodesButton = ButtonFactory.createButton(with: UIImage(named: ViewEnums.CharacterCell.Icon.episodesBttn), and: ColorEnum.accentOrange)
     
     private let locationStack: UIStackView = {
         let stack = UIStackView()
@@ -17,10 +17,10 @@ final class CharacterCell: UICollectionViewCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    private let locationIcon = ImageFactory.createIconImageView(with: ViewEnums.CharacterCell.Icon.location, and: ViewEnums.CharacterCell.Color.accentGrey)
-    private let locationLabel = LabelFactory.createOrdinaryLabel(with: ViewEnums.CharacterCell.Color.accentGrey, and: .regular)
+    private let locationIcon = ImageFactory.createIconImageView(with: ViewEnums.CharacterCell.Icon.location, and: ColorEnum.accentGrey)
+    private let locationLabel = LabelFactory.createOrdinaryLabel(with: ColorEnum.accentGrey, and: .regular)
     
-    private let statusTag = LabelFactory.createOrdinaryLabel(with: ViewEnums.CharacterCell.Color.accentGrey, and: .medium)
+    private let statusTag = LabelFactory.createOrdinaryLabel(with: ColorEnum.accentGrey, and: .medium)
     private let statusBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGray
@@ -123,7 +123,9 @@ extension CharacterCell {
         setupTag(with: data)
         
     }
-    
+}
+
+private extension CharacterCell {
     func setupImage(with data: CharacterCellModel) {
         if let imageData = data.image {
             let image = UIImage(data: imageData)

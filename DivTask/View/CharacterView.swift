@@ -2,6 +2,16 @@ import UIKit
 
 final class CharacterView: UIView {
     private let titleLabel = LabelFactory.createTitleLabel()
+    private let messageLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 24, weight: .medium)
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.isHidden = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -35,9 +45,10 @@ final class CharacterView: UIView {
 
 private extension CharacterView {
     func setupView() {
-        backgroundColor = UIColor(named: ViewEnums.CharacterView.Color.accentBackground)
+        backgroundColor = UIColor(named: ColorEnum.accentBackground)
         
         addSubview(titleLabel)
+        addSubview(messageLabel)
         addSubview(collectionView)
     }
 }
@@ -52,8 +63,27 @@ private extension CharacterView {
                 collectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: ViewEnums.CharacterView.Constraints.collectionSpacing),
                 collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
                 collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-                collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+                collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+                
+                messageLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+                messageLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+                messageLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: ViewEnums.CharacterView.Constraints.messageLeading),
+                messageLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: ViewEnums.CharacterView.Constraints.messageTrailing)
             ])
+    }
+}
+
+extension CharacterView {
+    func showEmptyState() {
+        messageLabel.text = ViewEnums.CharacterView.String.messageLabelEmpty
+        messageLabel.isHidden = false
+        collectionView.isHidden = true
+    }
+    
+    func showErrorState() {
+        messageLabel.text = ViewEnums.CharacterView.String.messageLabelError
+        messageLabel.isHidden = false
+        collectionView.isHidden = true
     }
 }
 

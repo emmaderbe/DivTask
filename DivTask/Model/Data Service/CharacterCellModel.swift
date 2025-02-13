@@ -6,15 +6,6 @@ enum CharacterStatus: String, Decodable {
     case unknown = "Unknown"
 }
 
-enum CharacterStatusColor {
-    static let aliveText = "customAliveText"
-    static let aliveBackground = "customAliveBackground"
-    static let deadText = "customDeadText"
-    static let deadBackground = "customDeadBackground"
-    static let unknownText = "customUnknownText"
-    static let unknownBackground = "customUnknownBackground"
-}
-
 struct CharacterStatusColorScheme {
     let textColorName: String
     let backgroundColorName: String
@@ -36,18 +27,18 @@ struct CharacterCellModel {
         switch status {
         case .alive:
             return CharacterStatusColorScheme(
-                textColorName: CharacterStatusColor.aliveText,
-                backgroundColorName: CharacterStatusColor.aliveBackground
+                textColorName: ColorEnum.aliveText,
+                backgroundColorName: ColorEnum.aliveBackground
             )
         case .dead:
             return CharacterStatusColorScheme(
-                textColorName: CharacterStatusColor.deadText,
-                backgroundColorName: CharacterStatusColor.deadBackground
+                textColorName: ColorEnum.deadText,
+                backgroundColorName: ColorEnum.deadBackground
             )
         case .unknown:
             return CharacterStatusColorScheme(
-                textColorName: CharacterStatusColor.unknownText,
-                backgroundColorName: CharacterStatusColor.unknownBackground
+                textColorName: ColorEnum.unknownText,
+                backgroundColorName: ColorEnum.unknownBackground
             )
         }
     }

@@ -2,12 +2,6 @@ import Foundation
 
 enum ViewEnums {
     enum CharacterCell {
-        enum Color {
-            static let accentColor = "AccentColor"
-            static let accentOrange = "customOrange"
-            static let accentGrey = "accentGrey"
-        }
-        
         enum Icon {
             static let episodesBttn = "polygon"
             static let location = "placeholder"
@@ -29,19 +23,19 @@ enum ViewEnums {
     }
     
     enum CharacterView {
-        enum Color {
-            static let accentBackground = "customBackground"
-        }
-        
         enum Constraints {
             static let collectionLayoutSpacing: CGFloat = 32
             static let titleTop: CGFloat = 90
             static let titleLeading: CGFloat = 24
             static let collectionSpacing: CGFloat = 24
+            static let messageLeading: CGFloat = 16
+            static let messageTrailing: CGFloat = -16
         }
         
         enum String {
             static let title = "Characters"
+            static let messageLabelEmpty = "Упс, ничего не найдено. Где-то в другой вселенной Рик бы нашел!"
+            static let messageLabelError = "Упс! Что-то пошло не так. Рик перепутал кнопки!"
         }
     }
 }

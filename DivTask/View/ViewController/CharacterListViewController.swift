@@ -40,10 +40,21 @@ private extension CharacterListViewController {
     
     func bindViewModel() {
         viewModel.start()
+        
         viewModel.didUpdateCharacters = { [weak self] characters in
             guard let self = self else { return }
             self.dataSource.updateCharacters(characters)
             self.characterView.reloadCollection()
+        }
+
+        viewModel.didReceiveEmptyState = { [weak self] in
+            guard let self = self else { return }
+            self.characterView.showEmptyState()
+        }
+
+        viewModel.didReceiveErrorState = { [weak self] in
+            guard let self = self else { return }
+            self.characterView.showErrorState()
         }
     }
 }

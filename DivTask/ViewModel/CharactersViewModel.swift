@@ -2,6 +2,8 @@ import Foundation
 
 protocol CharactersViewModelProtocol: AnyObject {
     var didUpdateCharacters: (([CharacterCellModel]) -> Void)? { get set }
+    var didReceiveEmptyState: (() -> Void)? { get set }
+    var didReceiveErrorState: (() -> Void)? { get set }
     func start()
 }
 
@@ -12,6 +14,8 @@ final class CharactersViewModel: CharactersViewModelProtocol {
     private var characters: [CharacterCellModel] = []
     
     var didUpdateCharacters: (([CharacterCellModel]) -> Void)?
+    var didReceiveEmptyState: (() -> Void)?
+    var didReceiveErrorState: (() -> Void)?
     
     init(networkService: NetworkServiceProtocol, dataMapper: CharacterDataMapperProtocol, imageLoader: ImageLoaderProtocol) {
         self.networkService = networkService
@@ -30,10 +34,16 @@ private extension CharactersViewModel {
             guard let self else { return }
             switch result {
             case .success(let characters):
-                self.characters = self.dataMapper.map(characters)
-                self.didUpdateCharacters?(self.characters)
-                self.loadImages()
+                let mappedCharacters = self.dataMapper.map(characters)
+                if mappedCharacters.isEmpty {
+                    self.didReceiveEmptyState?()
+                } else {
+                    self.characters = mappedCharacters
+                    self.didUpdateCharacters?(self.characters)
+                    self.loadImages()
+                }
             case .failure(let error):
+                self.didReceiveErrorState?()
                 print("Failed to fetch characters: \(error)")
             }
         }
