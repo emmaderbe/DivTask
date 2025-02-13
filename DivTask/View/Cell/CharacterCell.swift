@@ -29,6 +29,7 @@ final class CharacterCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        setupPriority()
         setupConstraints()
     }
     
@@ -63,6 +64,12 @@ private extension CharacterCell {
 }
 
 private extension CharacterCell {
+    func setupPriority() {
+        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        statusTag.setContentCompressionResistancePriority(.required, for: .horizontal)
+        statusBackgroundView.setContentCompressionResistancePriority(.required, for: .horizontal)
+    }
+    
     func setupConstraints() {
         NSLayoutConstraint.activate([
             characterImageView.topAnchor.constraint(equalTo: topAnchor),
@@ -72,6 +79,7 @@ private extension CharacterCell {
             
             nameLabel.topAnchor.constraint(equalTo: topAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: characterImageView.trailingAnchor, constant: ViewEnums.CharacterCell.Constraints.nameLabelSpacing),
+            nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: statusTag.leadingAnchor, constant: -ViewEnums.CharacterCell.Constraints.nameLabelSpacing),
             
             infoLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: ViewEnums.CharacterCell.Constraints.infoLabelTop),
             infoLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
@@ -95,20 +103,17 @@ private extension CharacterCell {
 
 
 extension CharacterCell {
-    func setupText(name: String, info: String, bttn: String, location: String, status: String ) {
-        nameLabel.text = name
-        infoLabel.text = info
-        episodesButton.setTitle(bttn, for: .normal)
-        locationLabel.text = location
-        statusTag.text = status
-    }
-    
-    func setupImage(with image: String) {
-        characterImageView.image = UIImage(named: image)
-    }
-    
-    func setupStatusColor() {
+    func setupCell(with data: CharacterCellModel) {
+        nameLabel.text = data.name
+        infoLabel.text = data.info
+        episodesButton.setTitle(data.buttonTitle, for: .normal)
+        locationLabel.text = data.location
+        statusTag.text = data.statusText
         
+        characterImageView.image = UIImage(named: data.imageURL)
+        
+        statusTag.textColor = UIColor(named: data.statusColorScheme.textColorName)
+            statusBackgroundView.backgroundColor = UIColor(named: data.statusColorScheme.backgroundColorName)
     }
 }
 

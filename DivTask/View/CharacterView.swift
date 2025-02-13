@@ -69,4 +69,8 @@ extension CharacterView {
     func setDelegate(with delegate: CharacterListDelegate) {
         collectionView.delegate = delegate
     }
+    
+    func reloadCollection() {
+        collectionView.reloadData()
+    }
 }
