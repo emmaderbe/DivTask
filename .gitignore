@@ -1,0 +1,36 @@
+# Xcode
+.DS_Store
+.build/
+*.xcworkspace
+DerivedData/
+*.pbxuser
+!default.pbxuser
+xcuserdata/
+*.moved-aside
+*.xcuserstate
+
+# SwiftPM
+.build/
+.swiftpm/xcode
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Carthage
+Carthage/Build/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+
+# Archives
+*.xcarchive
+
+# Logs
+*.log
+
+# Temporary
+*.tmp
