@@ -12,7 +12,8 @@ final class CharacterDataMapper: CharacterDataMapperProtocol {
                 info: "\(character.species), \(character.gender)",
                 location: character.location.name,
                 status: CharacterStatus(rawValue: character.status) ?? .unknown,
-                imageURL: character.image
+                imageURL: URL(string: character.image),
+                image: nil
             )
         }
     }

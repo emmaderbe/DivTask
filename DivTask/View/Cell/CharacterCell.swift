@@ -1,11 +1,13 @@
 import UIKit
 
 final class CharacterCell: UICollectionViewCell {
+    private let imageContainerView = ImageFactory.createCharacterImageContainerView()
     private let characterImageView = ImageFactory.createCharacterImageView()
-    private let nameLabel = LabelFactory.createSubtitleLabel()
-    private let infoLabel = LabelFactory.createOrdinaryLabel(with: ViewEnums.CharacterCell.Color.accentColor, and: .regular)
     
-    private let episodesButton = ButtonFactory.createButton(with: UIImage(named: ViewEnums.CharacterCell.Icon.episodesBttn), and: ViewEnums.CharacterCell.Color.accentOrange)
+    private let nameLabel = LabelFactory.createSubtitleLabel()
+    private let infoLabel = LabelFactory.createOrdinaryLabel(with: ColorEnum.accentColor, and: .regular)
+    
+    private let episodesButton = ButtonFactory.createButton(with: UIImage(named: ViewEnums.CharacterCell.Icon.episodesBttn), and: ColorEnum.accentOrange)
     
     private let locationStack: UIStackView = {
         let stack = UIStackView()
@@ -15,10 +17,10 @@ final class CharacterCell: UICollectionViewCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    private let locationIcon = ImageFactory.createIconImageView(with: ViewEnums.CharacterCell.Icon.location, and: ViewEnums.CharacterCell.Color.accentGrey)
-    private let locationLabel = LabelFactory.createOrdinaryLabel(with: ViewEnums.CharacterCell.Color.accentGrey, and: .regular)
+    private let locationIcon = ImageFactory.createIconImageView(with: ViewEnums.CharacterCell.Icon.location, and: ColorEnum.accentGrey)
+    private let locationLabel = LabelFactory.createOrdinaryLabel(with: ColorEnum.accentGrey, and: .regular)
     
-    private let statusTag = LabelFactory.createOrdinaryLabel(with: ViewEnums.CharacterCell.Color.accentGrey, and: .medium)
+    private let statusTag = LabelFactory.createOrdinaryLabel(with: ColorEnum.accentGrey, and: .medium)
     private let statusBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGray
@@ -48,19 +50,21 @@ private extension CharacterCell {
     func setupView() {
         backgroundColor = .clear
         
-        addSubview(characterImageView)
+        addSubview(imageContainerView)
         addSubview(nameLabel)
         addSubview(infoLabel)
         addSubview(episodesButton)
         addSubview(locationStack)
         addSubview(statusBackgroundView)
         
+        imageContainerView.addSubview(characterImageView)
+        
         locationStack.addArrangedSubview(locationIcon)
         locationStack.addArrangedSubview(locationLabel)
         
         statusBackgroundView.addSubview(statusTag)
     }
-
+    
 }
 
 private extension CharacterCell {
@@ -72,10 +76,15 @@ private extension CharacterCell {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            characterImageView.topAnchor.constraint(equalTo: topAnchor),
-            characterImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            characterImageView.widthAnchor.constraint(equalToConstant: ViewEnums.CharacterCell.Constraints.characterImageViewHeight),
-            characterImageView.heightAnchor.constraint(equalTo: characterImageView.widthAnchor, multiplier: 1),
+            imageContainerView.topAnchor.constraint(equalTo: topAnchor),
+            imageContainerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            imageContainerView.widthAnchor.constraint(equalToConstant: ViewEnums.CharacterCell.Constraints.characterImageViewHeight),
+            imageContainerView.heightAnchor.constraint(equalTo: imageContainerView.widthAnchor),
+            
+            characterImageView.topAnchor.constraint(equalTo: imageContainerView.topAnchor),
+            characterImageView.leadingAnchor.constraint(equalTo: imageContainerView.leadingAnchor),
+            characterImageView.trailingAnchor.constraint(equalTo: imageContainerView.trailingAnchor),
+            characterImageView.bottomAnchor.constraint(equalTo: imageContainerView.bottomAnchor),
             
             nameLabel.topAnchor.constraint(equalTo: topAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: characterImageView.trailingAnchor, constant: ViewEnums.CharacterCell.Constraints.nameLabelSpacing),
@@ -110,10 +119,31 @@ extension CharacterCell {
         locationLabel.text = data.location
         statusTag.text = data.statusText
         
-        characterImageView.image = UIImage(named: data.imageURL)
+        setupImage(with: data)
+        setupTag(with: data)
         
+    }
+}
+
+private extension CharacterCell {
+    func setupImage(with data: CharacterCellModel) {
+        if let imageData = data.image {
+            let image = UIImage(data: imageData)
+            
+            if data.status == .dead {
+                characterImageView.image = image?.applyGrayscale()
+            } else {
+                characterImageView.image = image
+            }
+        } else {
+            characterImageView.image = nil
+            characterImageView.backgroundColor = .customUnknownBackground
+        }
+    }
+    
+    func setupTag(with data: CharacterCellModel) {
         statusTag.textColor = UIColor(named: data.statusColorScheme.textColorName)
-            statusBackgroundView.backgroundColor = UIColor(named: data.statusColorScheme.backgroundColorName)
+        statusBackgroundView.backgroundColor = UIColor(named: data.statusColorScheme.backgroundColorName)
     }
 }
 
