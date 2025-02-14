@@ -10,5 +10,5 @@ enum NetworkError: Error {
 }
 
 enum APIConstants {
-    static let baseURL = "https://rickandmortyapi.com/api/character"
+    static let baseURL = "https://rickandmorоtyapi.com/api/character"
 }

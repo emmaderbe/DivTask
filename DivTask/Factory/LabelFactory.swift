@@ -3,7 +3,7 @@ import UIKit
 final class LabelFactory {
     static func createTitleLabel() -> UILabel {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 31, weight: .bold)
+        label.font = UIFont(name: "SF UI Text Bold", size: 31)
         label.textColor = UIColor(named: "AccentColor")
         label.numberOfLines = 1
         label.textAlignment = .left
@@ -14,18 +14,30 @@ final class LabelFactory {
     
     static func createSubtitleLabel() -> UILabel {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 21, weight: .medium)
+        label.font = UIFont(name: "SF UI Text Medium", size: 21)
         label.textColor = UIColor(named: "AccentColor")
         label.numberOfLines = 1
-        label.lineBreakMode = .byTruncatingTail
+        label.textAlignment = .left
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.7
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+
+    
+    static func createTagLabel() -> UILabel {
+        let label = UILabel()
+        label.font = UIFont(name: "SF UI Text Medium", size: 14)
+        label.textColor = UIColor(named: "AccentColor")
+        label.numberOfLines = 0
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }
     
-    static func createOrdinaryLabel(with color: String, and weight: UIFont.Weight) -> UILabel {
+    static func createOrdinaryLabel(with color: String) -> UILabel {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14, weight: weight)
+        label.font = UIFont(name: "SF UI Text", size: 14)
         label.textColor = UIColor(named: color)
         label.numberOfLines = 0
         label.textAlignment = .left

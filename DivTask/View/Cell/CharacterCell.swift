@@ -5,7 +5,7 @@ final class CharacterCell: UICollectionViewCell {
     private let characterImageView = ImageFactory.createCharacterImageView()
     
     private let nameLabel = LabelFactory.createSubtitleLabel()
-    private let infoLabel = LabelFactory.createOrdinaryLabel(with: ColorEnum.accentColor, and: .regular)
+    private let infoLabel = LabelFactory.createOrdinaryLabel(with: ColorEnum.accentColor)
     
     private let episodesButton = ButtonFactory.createButton(with: UIImage(named: ViewEnums.CharacterCell.Icon.episodesBttn), and: ColorEnum.accentOrange)
     
@@ -18,9 +18,9 @@ final class CharacterCell: UICollectionViewCell {
         return stack
     }()
     private let locationIcon = ImageFactory.createIconImageView(with: ViewEnums.CharacterCell.Icon.location, and: ColorEnum.accentGrey)
-    private let locationLabel = LabelFactory.createOrdinaryLabel(with: ColorEnum.accentGrey, and: .regular)
+    private let locationLabel = LabelFactory.createOrdinaryLabel(with: ColorEnum.accentGrey)
     
-    private let statusTag = LabelFactory.createOrdinaryLabel(with: ColorEnum.accentGrey, and: .medium)
+    private let statusTag = LabelFactory.createTagLabel()
     private let statusBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGray

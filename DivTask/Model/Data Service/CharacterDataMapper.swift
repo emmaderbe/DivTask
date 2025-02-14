@@ -9,7 +9,7 @@ final class CharacterDataMapper: CharacterDataMapperProtocol {
         characters.map { character in
             CharacterCellModel(
                 name: character.name,
-                info: "\(character.species), \(character.gender)",
+                info: "\(character.species), \(character.gender.lowercased())",
                 location: character.location.name,
                 status: CharacterStatus(rawValue: character.status) ?? .unknown,
                 imageURL: URL(string: character.image),
