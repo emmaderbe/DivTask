@@ -4,7 +4,7 @@ final class CharacterView: UIView {
     private let titleLabel = LabelFactory.createTitleLabel()
     private let messageLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .accent
         label.font = .systemFont(ofSize: 24, weight: .medium)
         label.textAlignment = .center
         label.numberOfLines = 0
